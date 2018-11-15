@@ -1,0 +1,12 @@
+# 系统生成文件
+.idea
+.DS_Store
+
+# 标记插件生成的标记文件
+.tags
+.tags_sorted_by_file
+
+node_modules
+.vscode
+.history
+fis-conf-dev.js
