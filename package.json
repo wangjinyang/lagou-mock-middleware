@@ -1,7 +1,6 @@
 {
   "name": "lagou-mock-middleware",
   "version": "1.0.0",
-  "private": true,
   "main": "lagou-mock-middleware",
   "scripts": {
     "start": "node ./bin/www",
