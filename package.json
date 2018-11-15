@@ -1,0 +1,21 @@
+{
+  "name": "lagou-mock-middleware",
+  "version": "1.0.0",
+  "private": true,
+  "main": "lagou-mock-middleware",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "supervisor node ./bin/www"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "supervisor": "^0.12.0"
+  }
+}
