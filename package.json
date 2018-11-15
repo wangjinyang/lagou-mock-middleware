@@ -1,11 +1,8 @@
 {
   "name": "lagou-mock-middleware",
   "version": "1.0.0",
+  "description": "",
   "main": "lagou-mock-middleware",
-  "scripts": {
-    "start": "node ./bin/www",
-    "test": "supervisor node ./bin/www"
-  },
   "dependencies": {
     "request": "^2.88.0"
   },
@@ -16,5 +13,19 @@
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "supervisor": "^0.12.0"
-  }
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "supervisor node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangjinyang/lagou-mock-middleware.git"
+  },
+  "author": "wangjinyang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangjinyang/lagou-mock-middleware/issues"
+  },
+  "homepage": "https://github.com/wangjinyang/lagou-mock-middleware#readme"
 }
