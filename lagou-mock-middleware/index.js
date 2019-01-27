@@ -6,6 +6,10 @@ function lagouMockMiddleware(config) {
     var mockServerConfig = config && config.mockServerConfig || {};
     mockJsonDir = config && config.mockJsonDir || '';
     return function(req, res, next) {
+        if (req.url === '/__webpack_hmr') {
+            next();
+            return;
+        }
         var pathName = req.path;
         var body = req.body;
         var method = (req.method || 'GET').toLocaleUpperCase();
