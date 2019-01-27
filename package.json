@@ -1,6 +1,6 @@
 {
   "name": "lagou-mock-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lagou-mock-middleware",
   "dependencies": {
