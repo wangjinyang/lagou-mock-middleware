@@ -36,6 +36,7 @@ function initConfigByArg(configPath){
         config = require(configPath)
         mockServerConfig = config && config.mockServerConfig || {};
         mockJsonDir = config && config.mockJsonDir || '';
+        console.log('mock data update success ' + new moment().format('YYYY-MM-DDThh:mm:ss'))
     }
     catch(e){
         console.log(e)
@@ -53,7 +54,6 @@ function watchConfigChange(configPath){
             configChangeTimer = setTimeout(function(){
                 purgeCache(configPath);
                 initConfigByArg(configPath)
-                console.log('mock data update success    ' + new moment().format('YYYY-MM-DDThh:mm:ss'))
             }, 3000)
         })
 }
