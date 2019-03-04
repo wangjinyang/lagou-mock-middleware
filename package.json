@@ -1,9 +1,11 @@
 {
   "name": "lagou-mock-middleware",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "description": "",
   "main": "lagou-mock-middleware",
   "dependencies": {
+    "chokidar": "^2.1.2",
+    "moment": "^2.24.0",
     "request": "^2.88.0"
   },
   "devDependencies": {

@@ -1,12 +1,23 @@
-var request = require('request').defaults({jar: true});
 var path = require('path');
 var fs = require('fs');
+var request = require('request').defaults({jar: true});
+var chokidar = require('chokidar');
+var moment = require('moment');
+
+var purgeCache = require('./remove-require-cache');
+
+var configChangeTimer
 var mockJsonDir;
-function lagouMockMiddleware(config) {
-    var mockServerConfig = config && config.mockServerConfig || {};
-    mockJsonDir = config && config.mockJsonDir || '';
+var mockServerConfig;
+function lagouMockMiddleware(configPath, exculdeUrlList) {
+    initConfigByArg(configPath)
+    watchConfigChange(configPath)
     return function(req, res, next) {
-        if (req.url === '/__webpack_hmr') {
+        if (
+            exculdeUrlList.some(function(item) {
+                return req.url.indexOf(item) > -1;
+            })
+        ) {
             next();
             return;
         }
@@ -17,6 +28,34 @@ function lagouMockMiddleware(config) {
         var query = req.query;
         return renderMockData(mockData, method, query, body, res, next);
     };
+}
+
+function initConfigByArg(configPath){
+    var config = {};
+    try{
+        config = require(configPath)
+        mockServerConfig = config && config.mockServerConfig || {};
+        mockJsonDir = config && config.mockJsonDir || '';
+    }
+    catch(e){
+        console.log(e)
+    }
+    
+}
+
+function watchConfigChange(configPath){
+    var watcher = chokidar.watch(configPath);
+    watcher
+        .on('change', function(){
+            if(configChangeTimer){
+                clearTimeout(configChangeTimer)
+            }
+            configChangeTimer = setTimeout(function(){
+                purgeCache(configPath);
+                initConfigByArg(configPath)
+                console.log('mock data update success    ' + new moment().format('YYYY-MM-DDThh:mm:ss'))
+            }, 3000)
+        })
 }
 
 function renderMockData(mockData, method, query, body, res, next) {
