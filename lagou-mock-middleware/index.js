@@ -41,7 +41,7 @@ function initConfigByArg(configPath){
     catch(e){
         console.log(e)
     }
-    
+
 }
 
 function watchConfigChange(configPath){
@@ -98,7 +98,8 @@ function renderMockData(mockData, method, query, body, res, next) {
             return res.json(mockData);
         }
         else if (mockDataType === '[object Function]') {
-            return res.json(mockData(query, body));
+            var result = mockData(query, body);
+            return renderMockData(result, method, query, body, res, next);
         }
         else {
             return res.json(mockData);
