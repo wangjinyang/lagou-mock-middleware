@@ -6,12 +6,12 @@ var moment = require('moment');
 
 var purgeCache = require('./remove-require-cache');
 
-var configChangeTimer
+var configChangeTimer;
 var mockJsonDir;
 var mockServerConfig;
 function lagouMockMiddleware(configPath, exculdeUrlList) {
-    initConfigByArg(configPath)
-    watchConfigChange(configPath)
+    initConfigByArg(configPath);
+    watchConfigChange(configPath);
     return function(req, res, next) {
         if (
             exculdeUrlList.some(function(item) {
@@ -30,32 +30,32 @@ function lagouMockMiddleware(configPath, exculdeUrlList) {
     };
 }
 
-function initConfigByArg(configPath){
+function initConfigByArg(configPath) {
     var config = {};
-    try{
-        config = require(configPath)
+    try {
+        config = require(configPath);
         mockServerConfig = config && config.mockServerConfig || {};
         mockJsonDir = config && config.mockJsonDir || '';
-        console.log('mock data update success ' + new moment().format('YYYY-MM-DDThh:mm:ss'))
+        console.log('mock data update success ' + new moment().format('YYYY-MM-DDThh:mm:ss'));
     }
-    catch(e){
-        console.log(e)
+    catch (e) {
+        console.log(e);
     }
 
 }
 
-function watchConfigChange(configPath){
+function watchConfigChange(configPath) {
     var watcher = chokidar.watch(configPath);
     watcher
-        .on('change', function(){
-            if(configChangeTimer){
-                clearTimeout(configChangeTimer)
+        .on('change', function() {
+            if (configChangeTimer) {
+                clearTimeout(configChangeTimer);
             }
-            configChangeTimer = setTimeout(function(){
+            configChangeTimer = setTimeout(function() {
                 purgeCache(configPath);
-                initConfigByArg(configPath)
-            }, 3000)
-        })
+                initConfigByArg(configPath);
+            }, 3000);
+        });
 }
 
 function renderMockData(mockData, method, query, body, res, next) {
@@ -79,12 +79,12 @@ function renderMockData(mockData, method, query, body, res, next) {
                 if (!path.isAbsolute(mockJsonDir)) {
                     return res.json('mockJsonDir should be a absolute path');
                 }
+                var mockJsonPath = path.join(mockJsonDir, mockData);
                 try {
-                    var mockJsonPath = path.join(mockJsonDir, mockData);
                     return res.json(JSON.parse(fs.readFileSync(mockJsonPath).toString()));
                 }
                 catch (e) {
-                    return res.json('mock json file not exist');
+                    return res.json('mock json file not exist, file path is:' + mockJsonPath);
                 }
 
             }
